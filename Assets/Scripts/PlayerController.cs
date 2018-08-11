@@ -13,9 +13,13 @@ public class PlayerController : MonoBehaviour
     private float moveVertical;
     private bool isMoving;
     private CollisionChecker collisionChecker;
+    private SpriteRenderer spriteRender;
 
     private GameObject ui;
     private UIController uiController;
+
+    public Sprite squareBlob;
+    public Sprite rectangleBlob;
 
     public void Grow()
     {
@@ -26,10 +30,15 @@ public class PlayerController : MonoBehaviour
         {
             transform.localScale = new Vector3(transform.localScale.x + 1, transform.localScale.y, transform.localScale.z);
             nextSize = new Vector3(transform.localScale.x, transform.localScale.y +1, transform.localScale.z);
+            spriteRender.gameObject.transform.localScale = new Vector3(3f, 6f, 1f);
+            spriteRender.sprite = rectangleBlob;
+
         } else
         {
             transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y + 1, transform.localScale.z);
             nextSize = new Vector3(transform.localScale.x +1, transform.localScale.y, transform.localScale.z);
+            spriteRender.gameObject.transform.localScale = new Vector3(6f, 6f, 1f);
+            spriteRender.sprite = squareBlob;
         }
 
         uiController.UpdatePlayerSize(transform.localScale,nextSize);
@@ -48,6 +57,7 @@ public class PlayerController : MonoBehaviour
         endPosition = transform.position;
         isMoving = false;
         collisionChecker = GetComponentInChildren<CollisionChecker>();
+        spriteRender = GetComponentInChildren<SpriteRenderer>();
 
         ui = GameObject.FindGameObjectWithTag("Ui");
         uiController = ui.GetComponent<UIController>();
