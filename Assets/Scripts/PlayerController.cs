@@ -124,6 +124,7 @@ public class PlayerController : MonoBehaviour
             if(wantToGrow)
             {
                 DoGrow();
+                return;
             }
             float moveHorizontal = 0;
             float moveVertical = 0;
