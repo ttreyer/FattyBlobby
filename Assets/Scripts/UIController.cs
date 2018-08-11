@@ -44,11 +44,12 @@ public class UIController : MonoBehaviour
 		UpdateUIPlayer(current, next);
 	}
 
-	public void PrintGameOver()
+    void AnimateGO() { GetComponent<Animator>().SetTrigger("OnGameover"); }
+	public void PrintGameOver(float afterTiming)
 	{
         foreach (Behaviour toDisable in disableOnGameover)
             toDisable.enabled = false;
 
-        GetComponent<Animator>().SetTrigger("OnGameover");
+        Invoke("AnimateGO", afterTiming);
 	}
 }

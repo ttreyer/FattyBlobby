@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     public Sprite rectangleBlob;
 
     private bool isAlive = true;
+    private Animator animator;
 
     public void Grow()
     {
@@ -47,8 +48,7 @@ public class PlayerController : MonoBehaviour
 
             } else
             {
-                isAlive = false;
-                uiController.PrintGameOver();
+                Die();
                 return;
             }
 
@@ -62,8 +62,7 @@ public class PlayerController : MonoBehaviour
                 spriteRender.sprite = squareBlob;
             } else
             {
-                isAlive = false;
-                uiController.PrintGameOver();
+                Die();
                 return;
             }
         }
@@ -90,6 +89,13 @@ public class PlayerController : MonoBehaviour
 
         ui = GameObject.FindGameObjectWithTag("Ui");
         uiController = ui.GetComponent<UIController>();
+        animator = GetComponent<Animator>();
+    }
+
+    void Die() {
+        isAlive = false;
+        animator.SetTrigger("Die");
+        uiController.PrintGameOver(0.7f);
     }
 
     void FixedUpdate()
