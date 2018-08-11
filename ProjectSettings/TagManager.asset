@@ -7,6 +7,7 @@ TagManager:
   - scaleTimerBar
   - scalePlayer
   - scalePlayerNext
+  - Ui
   layers:
   - Default
   - TransparentFX

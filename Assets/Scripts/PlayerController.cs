@@ -14,21 +14,33 @@ public class PlayerController : MonoBehaviour
     private bool isMoving;
     private CollisionChecker collisionChecker;
 
+    private GameObject ui;
+    private UIController uiController;
+
     public void Grow()
     {
+
+        Vector3 nextSize;
+
         if(transform.localScale.x == transform.localScale.y)
         {
             transform.localScale = new Vector3(transform.localScale.x + 1, transform.localScale.y, transform.localScale.z);
+            nextSize = new Vector3(transform.localScale.x, transform.localScale.y +1, transform.localScale.z);
         } else
         {
             transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y + 1, transform.localScale.z);
-
+            nextSize = new Vector3(transform.localScale.x +1, transform.localScale.y, transform.localScale.z);
         }
+
+        uiController.UpdatePlayerSize(transform.localScale,nextSize);
     }
 
     public void Init(Vector3 initScale)
     {
         transform.localScale = initScale;
+        Vector3 nextPlayerScale = new Vector3(initScale.x + 1, initScale.y, initScale.z);
+
+        uiController.UpdatePlayerSize(initScale, nextPlayerScale);
     }
 
     void Start()
@@ -36,6 +48,9 @@ public class PlayerController : MonoBehaviour
         endPosition = transform.position;
         isMoving = false;
         collisionChecker = GetComponentInChildren<CollisionChecker>();
+
+        ui = GameObject.FindGameObjectWithTag("Ui");
+        uiController = ui.GetComponent<UIController>();
     }
 
     void FixedUpdate()
