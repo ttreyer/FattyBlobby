@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
+    public Behaviour[] disableOnGameover;
 	private float scaleTimer;
 	private float TimerBarWidth;
 	private RectTransform UITimerBar;
@@ -45,6 +46,9 @@ public class UIController : MonoBehaviour
 
 	public void PrintGameOver()
 	{
-		GameObject.FindGameObjectWithTag("EndScreen").SetActive(true);
+        foreach (Behaviour toDisable in disableOnGameover)
+            toDisable.enabled = false;
+
+        GetComponent<Animator>().SetTrigger("OnGameover");
 	}
 }

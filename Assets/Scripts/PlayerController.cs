@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviour
 
     public Sprite squareBlob;
     public Sprite rectangleBlob;
+
+    private bool isAlive = true;
 
     public void Grow()
     {
@@ -45,6 +47,7 @@ public class PlayerController : MonoBehaviour
 
             } else
             {
+                isAlive = false;
                 uiController.PrintGameOver();
                 return;
             }
@@ -59,6 +62,7 @@ public class PlayerController : MonoBehaviour
                 spriteRender.sprite = squareBlob;
             } else
             {
+                isAlive = false;
                 uiController.PrintGameOver();
                 return;
             }
@@ -99,8 +103,13 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-    void Update()
-    {
+    void Update() {
+        if (!isAlive) {
+            if (Input.GetKey(KeyCode.R))
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+            return;
+        }
 
         if(!isMoving)
         {
