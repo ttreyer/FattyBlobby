@@ -35,8 +35,8 @@ public class UIController : MonoBehaviour
 
 	void UpdateUIPlayer(Vector3 current, Vector3 next)
 	{
-		UIPlayer.sizeDelta = current * 50;
-		UIPlayerNext.sizeDelta = next * 50;
+		UIPlayer.sizeDelta = current * 20;
+		UIPlayerNext.sizeDelta = next * 20;
 	}
 
 	public void UpdatePlayerSize(Vector3 current, Vector3 next)
