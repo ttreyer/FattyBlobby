@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     private float moveVertical;
     private bool isMoving;
     private bool wantToGrow;
+    private bool isHorizontalGrowth;
 
     private CollisionChecker collisionChecker;
     private SpriteRenderer spriteRender;
@@ -36,7 +37,7 @@ public class PlayerController : MonoBehaviour
         
         Vector3 nextSize;
 
-        if(transform.localScale.x == transform.localScale.y)
+        if(isHorizontalGrowth)
         {
             if(collisionChecker.CanGo("Right"))
             {
@@ -45,6 +46,7 @@ public class PlayerController : MonoBehaviour
             nextSize = new Vector3(transform.localScale.x, transform.localScale.y +1, transform.localScale.z);
             spriteRender.gameObject.transform.localScale = new Vector3(3f, 6f, 1f);
             spriteRender.sprite = rectangleBlob;
+                isHorizontalGrowth = false;
 
             } else
             {
@@ -60,6 +62,7 @@ public class PlayerController : MonoBehaviour
                 nextSize = new Vector3(transform.localScale.x + 1, transform.localScale.y, transform.localScale.z);
                 spriteRender.gameObject.transform.localScale = new Vector3(6f, 6f, 1f);
                 spriteRender.sprite = squareBlob;
+                isHorizontalGrowth = true;
             } else
             {
                 Die();
@@ -83,6 +86,7 @@ public class PlayerController : MonoBehaviour
     {
         endPosition = transform.position;
         isMoving = false;
+        isHorizontalGrowth = true;
         wantToGrow = false;
         collisionChecker = GetComponentInChildren<CollisionChecker>();
         spriteRender = GetComponentInChildren<SpriteRenderer>();
