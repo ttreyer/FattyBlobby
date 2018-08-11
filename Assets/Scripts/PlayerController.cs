@@ -108,6 +108,9 @@ public class PlayerController : MonoBehaviour
         isAlive = false;
         animator.SetTrigger("Die");
         uiController.PrintGameOver(0.7f);
+
+        // Reset for the animation to have to correct size
+        spriteRender.gameObject.transform.localScale = new Vector3(6f, 6f, 1f);
     }
 
     void FixedUpdate()
