@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class UIController : MonoBehaviour
 {
     public Behaviour[] disableOnGameover;
+	public int UICubeSize;
 	private float scaleTimer;
 	private float TimerBarWidth;
 	private RectTransform UITimerBar;
@@ -35,8 +36,8 @@ public class UIController : MonoBehaviour
 
 	void UpdateUIPlayer(Vector3 current, Vector3 next)
 	{
-		UIPlayer.sizeDelta = current * 20;
-		UIPlayerNext.sizeDelta = next * 20;
+		UIPlayer.sizeDelta = current * UICubeSize;
+		UIPlayerNext.sizeDelta = next * UICubeSize;
 	}
 
 	public void UpdatePlayerSize(Vector3 current, Vector3 next)
