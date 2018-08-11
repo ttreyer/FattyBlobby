@@ -21,19 +21,18 @@ public class GameController : MonoBehaviour {
         playerController = player.GetComponent<PlayerController>();
 
         //Get UI and controller
-      //  ui = GameObject.FindGameObjectWithTag("Canvas");
-       // uiController = ui.GetComponent<UIController>();
+        ui = GameObject.FindGameObjectWithTag("Ui");
+        uiController = ui.GetComponent<UIController>();
 
-    
+        uiController.Init(scaleTime);
         playerController.Init(initialPlayerScale);
-       // uiController.Init();
-
     }
 
     private void LateUpdate () {
         scaleTimer -= Time.deltaTime;
+        uiController.UpdateScaleTimer(scaleTimer);
 
-        if(scaleTimer <= 0)
+        if (scaleTimer <= 0)
         {
             playerController.Grow();
             initScaleTimer();

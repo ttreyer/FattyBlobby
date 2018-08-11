@@ -13,10 +13,9 @@ public class UIController : MonoBehaviour
 	private RectTransform UIPlayer;
 	private RectTransform UIPlayerNext;
 
-	public void Init(float scaleTimer, Vector3 current, Vector3 next)
+	public void Init(float scaleTimer)
 	{
 		this.scaleTimer = scaleTimer;
-		UpdateUIPlayer(current, next);
 	}
 
 	void Start ()
@@ -30,13 +29,13 @@ public class UIController : MonoBehaviour
 
 	public void UpdateScaleTimer(float scaleTime)
 	{
-		UITimerBar.sizeDelta = new Vector2(TimerBarWidth * ((scaleTimer - scaleTime) * 100 / scaleTimer), UITimerBar.rect.height);
+		UITimerBar.sizeDelta = new Vector2(TimerBarWidth * ((scaleTimer - scaleTime) / scaleTimer), UITimerBar.rect.height);
 	}
 
 	void UpdateUIPlayer(Vector3 current, Vector3 next)
 	{
-		UIPlayer.sizeDelta = current;
-		UIPlayerNext.sizeDelta = next;
+		UIPlayer.sizeDelta = current * 50;
+		UIPlayerNext.sizeDelta = next * 50;
 	}
 
 	public void UpdatePlayerSize(Vector3 current, Vector3 next)
