@@ -42,4 +42,9 @@ public class UIController : MonoBehaviour
 	{
 		UpdateUIPlayer(current, next);
 	}
+
+	public void PrintGameOver()
+	{
+		GameObject.FindGameObjectWithTag("EndScreen").SetActive(true);
+	}
 }
