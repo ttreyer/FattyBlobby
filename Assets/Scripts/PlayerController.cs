@@ -31,6 +31,11 @@ public class PlayerController : MonoBehaviour
     {
         wantToGrow = true;
     }
+
+    private void UpdateScale(Vector3 newScale) {
+        transform.localScale = newScale;
+        animator.SetBool("IsWider", newScale.x > newScale.y);
+    }
     
     private void DoGrow()
     {
@@ -41,11 +46,12 @@ public class PlayerController : MonoBehaviour
         {
             if(collisionChecker.CanGo("Right"))
             {
+                Vector3 evolution = new Vector3(1.0f, 0.0f, 0.0f);
+                UpdateScale(transform.localScale + evolution);
 
-            transform.localScale = new Vector3(transform.localScale.x + 1, transform.localScale.y, transform.localScale.z);
-            nextSize = new Vector3(transform.localScale.x, transform.localScale.y +1, transform.localScale.z);
-            spriteRender.gameObject.transform.localScale = new Vector3(3f, 6f, 1f);
-            spriteRender.sprite = rectangleBlob;
+                nextSize = new Vector3(transform.localScale.x, transform.localScale.y +1, transform.localScale.z);
+                spriteRender.gameObject.transform.localScale = new Vector3(3f, 6f, 1f);
+                spriteRender.sprite = rectangleBlob;
                 isHorizontalGrowth = false;
 
             } else
@@ -58,7 +64,9 @@ public class PlayerController : MonoBehaviour
         {
             if (collisionChecker.CanGo("Up"))
             {
-                transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y + 1, transform.localScale.z);
+                Vector3 evolution = new Vector3(0.0f, 1.0f, 0.0f);
+                UpdateScale(transform.localScale + evolution);
+
                 nextSize = new Vector3(transform.localScale.x + 1, transform.localScale.y, transform.localScale.z);
                 spriteRender.gameObject.transform.localScale = new Vector3(6f, 6f, 1f);
                 spriteRender.sprite = squareBlob;
