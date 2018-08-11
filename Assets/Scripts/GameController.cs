@@ -21,12 +21,12 @@ public class GameController : MonoBehaviour {
         playerController = player.GetComponent<PlayerController>();
 
         //Get UI and controller
-        ui = GameObject.FindGameObjectWithTag("Canvas");
-        uiController = ui.GetComponent<UIController>();
+      //  ui = GameObject.FindGameObjectWithTag("Canvas");
+       // uiController = ui.GetComponent<UIController>();
 
     
         playerController.Init(initialPlayerScale);
-        uiController.Init();
+       // uiController.Init();
 
     }
 
