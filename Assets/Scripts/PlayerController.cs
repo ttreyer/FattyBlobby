@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
     private float moveHorizontal;
     private float moveVertical;
     private bool isMoving;
+    private bool wantToGrow;
+
     private CollisionChecker collisionChecker;
     private SpriteRenderer spriteRender;
 
@@ -23,25 +25,47 @@ public class PlayerController : MonoBehaviour
 
     public void Grow()
     {
-
+        wantToGrow = true;
+    }
+    
+    private void DoGrow()
+    {
+        
         Vector3 nextSize;
 
         if(transform.localScale.x == transform.localScale.y)
         {
+            if(collisionChecker.CanGo("Right"))
+            {
+
             transform.localScale = new Vector3(transform.localScale.x + 1, transform.localScale.y, transform.localScale.z);
             nextSize = new Vector3(transform.localScale.x, transform.localScale.y +1, transform.localScale.z);
             spriteRender.gameObject.transform.localScale = new Vector3(3f, 6f, 1f);
             spriteRender.sprite = rectangleBlob;
 
+            } else
+            {
+                Debug.Log("Game over");
+                return;
+            }
+
         } else
         {
-            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y + 1, transform.localScale.z);
-            nextSize = new Vector3(transform.localScale.x +1, transform.localScale.y, transform.localScale.z);
-            spriteRender.gameObject.transform.localScale = new Vector3(6f, 6f, 1f);
-            spriteRender.sprite = squareBlob;
+            if (collisionChecker.CanGo("Up"))
+            {
+                transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y + 1, transform.localScale.z);
+                nextSize = new Vector3(transform.localScale.x + 1, transform.localScale.y, transform.localScale.z);
+                spriteRender.gameObject.transform.localScale = new Vector3(6f, 6f, 1f);
+                spriteRender.sprite = squareBlob;
+            } else
+            {
+                Debug.Log("Game over");
+                return;
+            }
         }
 
         uiController.UpdatePlayerSize(transform.localScale,nextSize);
+        wantToGrow = false;
     }
 
     public void Init(Vector3 initScale)
@@ -56,6 +80,7 @@ public class PlayerController : MonoBehaviour
     {
         endPosition = transform.position;
         isMoving = false;
+        wantToGrow = false;
         collisionChecker = GetComponentInChildren<CollisionChecker>();
         spriteRender = GetComponentInChildren<SpriteRenderer>();
 
@@ -79,6 +104,10 @@ public class PlayerController : MonoBehaviour
 
         if(!isMoving)
         {
+            if(wantToGrow)
+            {
+                DoGrow();
+            }
             float moveHorizontal = 0;
             float moveVertical = 0;
 
