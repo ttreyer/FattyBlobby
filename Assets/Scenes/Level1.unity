@@ -229,11 +229,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 114111028220825052, guid: 603ad587411187d4996242adcca0fad5,
-        type: 2}
-      propertyPath: scaleTime
-      value: 10
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 603ad587411187d4996242adcca0fad5, type: 2}
   m_IsPrefabAsset: 0
@@ -4021,11 +4016,6 @@ Prefab:
     m_Modifications:
     - target: {fileID: 224358234161586570, guid: ecb35042d8e784c729fb1d61b06d3b1d,
         type: 2}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 224358234161586570, guid: ecb35042d8e784c729fb1d61b06d3b1d,
-        type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -4113,10 +4103,6 @@ Prefab:
         type: 2}
       propertyPath: m_Pivot.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1938301572941760, guid: ecb35042d8e784c729fb1d61b06d3b1d, type: 2}
-      propertyPath: m_TagString
-      value: Ui
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ecb35042d8e784c729fb1d61b06d3b1d, type: 2}
@@ -7046,6 +7032,18 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114206883685305560, guid: 6a96fad68405e6e44aa1bd9d7b0675c5,
+        type: 2}
+      propertyPath: squareBlob
+      value: 
+      objectReference: {fileID: 21300000, guid: eda168779ecd1449898548b23c9030a4,
+        type: 3}
+    - target: {fileID: 114206883685305560, guid: 6a96fad68405e6e44aa1bd9d7b0675c5,
+        type: 2}
+      propertyPath: rectangleBlob
+      value: 
+      objectReference: {fileID: 21300000, guid: c7e51189ebabe47bdb536b5a199f620f,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a96fad68405e6e44aa1bd9d7b0675c5, type: 2}
   m_IsPrefabAsset: 0
