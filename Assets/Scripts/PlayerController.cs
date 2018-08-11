@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     private float moveHorizontal;
     private float moveVertical;
     private bool isMoving;
+    private CollisionChecker collisionChecker;
 
     public void Grow()
     {
@@ -34,6 +35,7 @@ public class PlayerController : MonoBehaviour
     {
         endPosition = transform.position;
         isMoving = false;
+        collisionChecker = GetComponentInChildren<CollisionChecker>();
     }
 
     void FixedUpdate()
@@ -57,11 +59,30 @@ public class PlayerController : MonoBehaviour
 
             if(Input.GetAxisRaw("Vertical") != 0)
             {
+
                 moveVertical = Input.GetAxisRaw("Vertical");
+
             }
             else
             {
                 moveHorizontal = Input.GetAxisRaw("Horizontal");
+            }
+
+            if(moveHorizontal > 0 &&  !collisionChecker.CanGo("Right"))
+            {
+                return;
+            }
+            else if (moveHorizontal < 0 && !collisionChecker.CanGo("Left"))
+            {
+                return;
+            }
+            else if (moveVertical > 0 && !collisionChecker.CanGo("Up"))
+            {
+                return;
+            }
+            else if (moveVertical < 0 && !collisionChecker.CanGo("Down"))
+            {
+                return;
             }
 
             endPosition = new Vector3(endPosition.x + distanceToMove * moveHorizontal, endPosition.y + distanceToMove * moveVertical, endPosition.z);
