@@ -117,6 +117,8 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
+        animator.SetBool("IsWalking", isMoving);
+
         if(!isMoving)
         {
             if(wantToGrow)
@@ -155,7 +157,8 @@ public class PlayerController : MonoBehaviour
             }
 
             endPosition = new Vector3(endPosition.x + distanceToMove * moveHorizontal, endPosition.y + distanceToMove * moveVertical, endPosition.z);
-            isMoving = true;
+            if (moveHorizontal != 0 || moveVertical != 0)
+                isMoving = true;
         }
       
     }
