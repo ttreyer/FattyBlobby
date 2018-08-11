@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
 
             } else
             {
-                Debug.Log("Game over");
+                uiController.PrintGameOver();
                 return;
             }
 
@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour
                 spriteRender.sprite = squareBlob;
             } else
             {
-                Debug.Log("Game over");
+                uiController.PrintGameOver();
                 return;
             }
         }
