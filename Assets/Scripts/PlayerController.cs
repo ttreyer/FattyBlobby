@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     private float moveVertical;
     private bool isMoving;
     private bool wantToGrow;
+    private bool wantToShrink;
     private bool isHorizontalGrowth;
 
     private CollisionChecker collisionChecker;
@@ -46,6 +47,11 @@ public class PlayerController : MonoBehaviour
         wantToGrow = true;
     }
 
+    public void Shrink()
+    {
+        wantToShrink = true;
+    }
+
     private void UpdateScale(Vector3 newScale) {
         transform.localScale = newScale;
 
@@ -59,7 +65,44 @@ public class PlayerController : MonoBehaviour
             spriteScale = new Vector3(6f, 6f, 1f);
         spriteRender.gameObject.transform.localScale = spriteScale;
     }
-    
+
+    private void DoShrink()
+    {
+
+        if (transform.localScale.x == 1 && transform.localScale.y == 1)
+        {
+            wantToShrink = false;
+            return;
+        }
+
+        
+        Vector3 nextSize;
+
+        if (!isHorizontalGrowth)
+        {
+            Vector3 evolution = new Vector3(1.0f, 0.0f, 0.0f);
+            UpdateScale(transform.localScale - evolution);
+
+            nextSize = new Vector3(transform.localScale.x + 1, transform.localScale.y, transform.localScale.z);
+            spriteRender.gameObject.transform.localScale = new Vector3(6f, 6f, 1f);
+            spriteRender.sprite = rectangleBlob;
+            isHorizontalGrowth = !isHorizontalGrowth;
+        }
+        else
+        {
+            Vector3 evolution = new Vector3(0.0f, 1.0f, 0.0f);
+            UpdateScale(transform.localScale - evolution);
+
+            nextSize = new Vector3(transform.localScale.x, transform.localScale.y + 1, transform.localScale.z);
+            spriteRender.gameObject.transform.localScale = new Vector3(3f, 6f, 1f);
+            spriteRender.sprite = squareBlob;
+            isHorizontalGrowth = !isHorizontalGrowth;
+        }
+        
+        uiController.UpdatePlayerSize(transform.localScale,nextSize);
+        wantToShrink = false;
+    }
+
     private void DoGrow()
     {
         
@@ -159,6 +202,13 @@ public class PlayerController : MonoBehaviour
                 DoCut();
                 return;
             }
+
+            if (wantToShrink)
+            {
+                DoShrink();
+                return;
+            }
+            
             if(wantToGrow)
             {
                 DoGrow();
