@@ -68,37 +68,30 @@ public class PlayerController : MonoBehaviour
 
     private void DoShrink()
     {
-
-        if (transform.localScale.x == 1 && transform.localScale.y == 1)
-        {
-            wantToShrink = false;
-            return;
-        }
-
-        
         Vector3 nextSize;
 
-        if (!isHorizontalGrowth)
+        if (!isHorizontalGrowth && transform.localScale.x > 1)
         {
             Vector3 evolution = new Vector3(1.0f, 0.0f, 0.0f);
             UpdateScale(transform.localScale - evolution);
 
             nextSize = new Vector3(transform.localScale.x + 1, transform.localScale.y, transform.localScale.z);
-            spriteRender.gameObject.transform.localScale = new Vector3(6f, 6f, 1f);
-            spriteRender.sprite = rectangleBlob;
-            isHorizontalGrowth = !isHorizontalGrowth;
+            isHorizontalGrowth = true;
         }
-        else
+        else if(transform.localScale.y > 1)
         {
             Vector3 evolution = new Vector3(0.0f, 1.0f, 0.0f);
             UpdateScale(transform.localScale - evolution);
 
             nextSize = new Vector3(transform.localScale.x, transform.localScale.y + 1, transform.localScale.z);
-            spriteRender.gameObject.transform.localScale = new Vector3(3f, 6f, 1f);
-            spriteRender.sprite = squareBlob;
-            isHorizontalGrowth = !isHorizontalGrowth;
+            isHorizontalGrowth = false;
         }
-        
+        else
+        {
+            wantToShrink = false;
+            return;
+        }
+
         uiController.UpdatePlayerSize(transform.localScale,nextSize);
         wantToShrink = false;
     }
