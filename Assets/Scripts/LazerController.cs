@@ -8,15 +8,13 @@ public enum LazerOrientation { Horizontal, Vertical }
 
 public class LazerController : MonoBehaviour {
     public LazerOrientation orientation;
-    public bool needTrigger;
+    public bool startingState;
     private bool state = false;
+    private Collider2D trigger;
 
-    private void Start()
-    {
-        if (needTrigger)
-        {
-            gameObject.SetActive(state);
-        }
+    private void Start() {
+        trigger = GetComponent<Collider2D>();
+        SetEnabled(startingState);
     }
 
     private void OnTriggerStay2D(Collider2D collision) {
@@ -36,17 +34,23 @@ public class LazerController : MonoBehaviour {
         else
             newY = (dy > 0.0f ? dy : player.transform.localScale.y);
 
-        Debug.Log("New scale: " + newX + ", " + newY);
-
         if (dx > 0.0f || dy > 0.0f)
             pc.Cut(new Vector3(newX, newY, 1.0f));
     }
 
-    public void Trigger()
-    {
-        if (needTrigger)
-            gameObject.SetActive(state = !state);
-        else
-            Debug.LogError("Can't Trigger a Lazer without this option !");
+    public void SetEnabled(bool newState) {
+        state = newState;
+
+        trigger.enabled = state;
+        foreach (Transform child in transform) {
+            Animator childAnim = child.GetComponent<Animator>();
+            if (childAnim == null) continue;
+
+            childAnim.SetBool("Enabled", state);
+        }
+    }
+
+    public void Toggle() {
+        SetEnabled(!state);
     }
 }
