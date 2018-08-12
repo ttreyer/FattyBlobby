@@ -27,6 +27,20 @@ public class PlayerController : MonoBehaviour
     private bool isAlive = true;
     private Animator animator;
 
+    private Vector3 cutDimensions;
+    private bool wantToCut = false;
+
+    public void Cut(Vector3 cutDim) {
+        cutDimensions = cutDim;
+        wantToCut = true;
+    }
+
+    private void DoCut() {
+        wantToCut = false;
+        wantToGrow = false;
+        UpdateScale(cutDimensions);
+    }
+
     public void Grow()
     {
         wantToGrow = true;
@@ -34,7 +48,16 @@ public class PlayerController : MonoBehaviour
 
     private void UpdateScale(Vector3 newScale) {
         transform.localScale = newScale;
-        animator.SetBool("IsWider", newScale.x > newScale.y);
+
+        bool isWider = newScale.x > newScale.y;
+        animator.SetBool("IsWider", isWider);
+
+        Vector3 spriteScale;
+        if (isWider)
+            spriteScale = new Vector3(3f, 6f, 1f);
+        else
+            spriteScale = new Vector3(6f, 6f, 1f);
+        spriteRender.gameObject.transform.localScale = spriteScale;
     }
     
     private void DoGrow()
@@ -50,8 +73,6 @@ public class PlayerController : MonoBehaviour
                 UpdateScale(transform.localScale + evolution);
 
                 nextSize = new Vector3(transform.localScale.x, transform.localScale.y +1, transform.localScale.z);
-                spriteRender.gameObject.transform.localScale = new Vector3(3f, 6f, 1f);
-                spriteRender.sprite = rectangleBlob;
                 isHorizontalGrowth = false;
 
             } else
@@ -68,8 +89,6 @@ public class PlayerController : MonoBehaviour
                 UpdateScale(transform.localScale + evolution);
 
                 nextSize = new Vector3(transform.localScale.x + 1, transform.localScale.y, transform.localScale.z);
-                spriteRender.gameObject.transform.localScale = new Vector3(6f, 6f, 1f);
-                spriteRender.sprite = squareBlob;
                 isHorizontalGrowth = true;
             } else
             {
@@ -136,11 +155,16 @@ public class PlayerController : MonoBehaviour
 
         if(!isMoving)
         {
+            if (wantToCut) {
+                DoCut();
+                return;
+            }
             if(wantToGrow)
             {
                 DoGrow();
                 return;
             }
+
             float moveHorizontal = 0;
             float moveVertical = 0;
 
